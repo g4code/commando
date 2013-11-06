@@ -1,0 +1,15 @@
+{
+  "name": "g4code/commando",
+  "description": "PHP command-line interface",
+  "authors": [
+    {
+      "name": "Drasko Gomboc",
+      "email": "drasko.gomboc@gmail.com>"
+    }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "3.7.*"
+  },
+  "require": {
+  }
+}
