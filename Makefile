@@ -21,7 +21,12 @@ test-group:
 	@/bin/echo -e "${TITLE} testing suite started..." \
 	&& vendor/phpunit/phpunit/composer/bin/phpunit -c tests/phpunit.xml --group $(g) \
 
+update:
+	@/bin/echo -e "${TITLE} update dependencies..." \
+	&& php composer.phar update \
+	&& /bin/echo -e "${TITLE} dependencies updated"
+
 .PHONY: all
 .PHONY: clean-composer-lock
-.PHONY: install
+.PHONY: install update
 .PHONY: test test-group
