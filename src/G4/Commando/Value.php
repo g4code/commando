@@ -1,6 +1,6 @@
 <?php
 
-namespace Commando;
+namespace G4\Commando;
 
 class Value
 {

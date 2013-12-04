@@ -1,15 +1,15 @@
 <?php
 
-namespace Commando;
+namespace G4\Commando;
 
-use Commando\Opt;
-use Commando\Option;
+use G4\Commando\Opt;
+use G4\Commando\Option;
 
 class Cli
 {
 
     /**
-     * @var \Commando\Opt
+     * @var \G4\Commando\Opt
      */
     private $_opt;
 

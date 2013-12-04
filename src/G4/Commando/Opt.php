@@ -1,9 +1,9 @@
 <?php
 
-namespace Commando;
+namespace G4\Commando;
 
-use Commando\Option;
-use Commando\Value;
+use G4\Commando\Option;
+use G4\Commando\Value;
 
 class Opt
 {

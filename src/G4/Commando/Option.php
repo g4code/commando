@@ -1,8 +1,8 @@
 <?php
 
-namespace Commando;
+namespace G4\Commando;
 
-use Commando\Opt;
+use G4\Commando\Opt;
 
 class Option
 {
