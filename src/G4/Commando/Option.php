@@ -8,7 +8,7 @@ class Option
 {
 
     /**
-     * @var \Commando\Opt
+     * @var \G4\Commando\Opt
      */
     private $_opt;
 
