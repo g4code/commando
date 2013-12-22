@@ -1,5 +1,5 @@
 {
-  "name": "g4code/commando",
+  "name": "g4/commando",
   "type": "library",
   "description": "PHP command-line interface",
   "keywords": [
@@ -10,12 +10,16 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "Drasko Gomboc",
-      "email": "drasko.gomboc@gmail.com"
+        "name": "Drasko Gomboc",
+        "email": "drasko.gomboc@gmail.com"
     },
     {
         "name": "Dejan Samardzija",
         "email": "samardzijadejan@gmail.com"
+    },
+    {
+        "name": "Ivan Krickovic",
+        "email": "ivan.krickovic@gmail.com"
     }
   ],
   "autoload": {
