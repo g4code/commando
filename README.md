@@ -5,7 +5,9 @@ commando
 
 ## Install
 
-Add a dependency on `g4code/commando` to your project's `composer.json` file. 
+```sh
+composer require g4code/commando
+```
 
 [Composer](http://getcomposer.org/)
 
