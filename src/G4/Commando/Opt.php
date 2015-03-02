@@ -7,73 +7,115 @@ use G4\Commando\Value;
 
 class Opt
 {
+    /**
+     * @var array
+     */
+    private $long;
 
-    private $_long = array();
+    /**
+     * @var array
+     */
+    private $optValues;
 
-    private $_optValues = null;
+    /**
+     * @var array
+     */
+    private $options;
 
-    private $_options = array();
+    /**
+     * @var array
+     */
+    private $short;
 
-    private $_short = array();
-
-    private $_value;
+    /**
+     * @var \G4\Commando\Value
+     */
+    private $value;
 
 
     public function __construct()
     {
-        $this->_value = new Value();
+        $this->options   = [];
+        $this->long      = [];
+        $this->short     = [];
+        $this->optValues = null;
     }
 
-    public function addLong($long)
-    {
-        $this->_long[$long] = $long.':';
-    }
-
-    public function addShort($short)
-    {
-        $this->_short[$short] = $short.':';
-    }
-
+    /**
+     * @param \G4\Commando\Option $option
+     */
     public function addOption(Option $option)
     {
-        $this->_options[] = $option;
-    }
-
-    public function getOptValues()
-    {
-        return $this->_optValues;
+        $this->options[] = $option;
     }
 
     public function getValue($optionName)
     {
-        $this->_getOpt();
-
-        return $this->_value->getValue($optionName);
+        $this->executeGetOpt();
+        return $this->value->getValue($optionName);
     }
 
-    public function hasInOptions($optionName)
+    public function hasValue($optionName)
     {
-        return isset($this->_optValues[$optionName]);
+        $this->executeGetOpt();
+        return $this->value->hasValue($optionName);
     }
 
-    private function _getLongFormatted()
+    private function addLong($long)
     {
-        return array_values($this->_long);
+        if (!empty($long)) {
+            $this->long[$long] = $long.':';
+        }
+        return $this;
     }
 
-    private function _getShortFormatted()
+    private function addShort($short)
     {
-        return join('', $this->_short);
+        if (!empty($short)) {
+            $this->short[$short] = $short.':';
+        }
+        return $this;
     }
 
-    private function _getOpt()
+    private function analizeOptions()
     {
-        if ($this->_optValues === null) {
-            $this->_optValues = getopt($this->_getShortFormatted(), $this->_getLongFormatted());
+        foreach($this->options as $option) {
+            $this
+                ->addLong($option->getLong())
+                ->addShort($option->getShort());
+        }
+        return $this;
+    }
 
-            $this->_value->setOptionValues($this->_optValues)
-                         ->setOptions($this->_options)
-                         ->fillValues();
+    private function getLongFormatted()
+    {
+        return array_values($this->long);
+    }
+
+    private function getShortFormatted()
+    {
+        return join('', $this->short);
+    }
+
+    /**
+     * @return boolean
+     */
+    private function hasOptionsAndValues()
+    {
+        return count($this->options) > 0
+        && $this->optValues !== null;
+    }
+
+    private function executeGetOpt()
+    {
+        if (!$this->hasOptionsAndValues()) {
+
+            $this->analizeOptions();
+
+            $this->optValues = getopt($this->getShortFormatted(), $this->getLongFormatted());
+
+            $this->value     = new Value($this->options, $this->optValues);
+            $this->value->fill();
         }
     }
 }

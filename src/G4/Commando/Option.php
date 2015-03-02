@@ -2,77 +2,73 @@
 
 namespace G4\Commando;
 
-use G4\Commando\Opt;
+use G4\Commando\Cli;
 
 class Option
 {
 
     /**
-     * @var \G4\Commando\Opt
+     * @var \G4\Commando\Cli
      */
-    private $_opt;
+    private $cli;
 
-    private $_desc;
+    /**
+     * @var string
+     */
+    private $desc;
 
-    private $_long;
+    /**
+     * @var string
+     */
+    private $long;
 
-    private $_short;
+    /**
+     * @var string
+     */
+    private $short;
 
 
-    public function __construct(Opt $opt)
+    public function __construct(Cli $cli)
     {
-        $this->_opt = $opt;
-
-        $this->_opt->addOption($this);
+        $this->cli = $cli;
     }
 
     public function desc($desc)
     {
-        $this->_desc = $desc;
-
-        return $this;
+        $this->desc = $desc;
+        return $this->cli;
     }
 
     public function getLong()
     {
-        return $this->_long;
+        return $this->long;
     }
 
     public function getShort()
     {
-        return $this->_short;
+        return $this->short;
     }
 
-    public function getValue()
+    public function getValue($optionValues)
     {
-        $optionValues = $this->_opt->getOptValues();
-
-        if (isset($optionValues[$this->_short])) {
-            return $optionValues[$this->_short];
+        if (isset($optionValues[$this->short])) {
+            return $optionValues[$this->short];
         }
-
-        if (isset($optionValues[$this->_long])) {
-            return $optionValues[$this->_long];
+        if (isset($optionValues[$this->long])) {
+            return $optionValues[$this->long];
         }
-
         return null;
     }
 
     public function long($long)
     {
-        $this->_long = $long;
-
-        $this->_opt->addLong($this->_long);
-
+        $this->long = $long;
         return $this;
     }
 
     public function short($short)
     {
-        $this->_short = $short;
-
-        $this->_opt->addShort($this->_short);
-
+        $this->short = $short;
         return $this;
     }
 }

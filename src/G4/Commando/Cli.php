@@ -11,41 +11,59 @@ class Cli
     /**
      * @var \G4\Commando\Opt
      */
-    private $_opt;
+    private $opt;
 
-    private $_version;
+    /**
+     * @var string
+     */
+    private $version;
 
 
     public function __construct()
     {
-        $this->_checkIfRunningInCli();
-
-        $this->_opt = new Opt();
+        $this->checkIfRunningInCli();
+        $this->opt = new Opt();
     }
 
-    public function getOpt()
+    /**
+     * @param string $optionName
+     * @return bool
+     */
+    public function has($optionName)
     {
-        return $this->_opt;
+        return $this->opt->hasValue($optionName);
     }
 
-    public function getOption($optionName)
-    {
-        return $this->_opt->getValue($optionName);
-    }
-
+    /**
+     * @return \G4\Commando\Option
+     */
     public function option()
     {
-        return new Option($this->_opt);
+        $option = new Option($this);
+        $this->opt->addOption($option);
+        return $option;
     }
 
+    /**
+     * @param string $optionName
+     * @return string
+     */
+    public function value($optionName)
+    {
+        return $this->opt->getValue($optionName);
+    }
+
+    /**
+     * @param string $version
+     * @return \G4\Commando\Cli
+     */
     public function version($version)
     {
-        $this->_version = $version;
-
+        $this->version = $version;
         return $this;
     }
 
-    private function _checkIfRunningInCli()
+    private function checkIfRunningInCli()
     {
         if (PHP_SAPI !== 'cli') {
             echo 'Warning: Composer should be invoked via the CLI version of PHP, not the '.PHP_SAPI.' SAPI'.PHP_EOL;

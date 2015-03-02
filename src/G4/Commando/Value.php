@@ -5,40 +5,53 @@ namespace G4\Commando;
 class Value
 {
 
-    private $_options;
+    /**
+     * @var array
+     */
+    private $options;
 
-    private $_optionValues;
+    /**
+     * @var array
+     */
+    private $optionValues;
 
-    private $_values = array();
+    /**
+     * @var array
+     */
+    private $values;
 
-
-    public function fillValues()
+    /**
+     * @param array $options
+     * @param array $optionValues
+     */
+    public function __construct($options, $optionValues)
     {
-        foreach ($this->_options as $option) {
+        $this->options      = $options;
+        $this->optionValues = $optionValues;
+        $this->values       = [];
+    }
 
-            $this->_values[$option->getLong()]  = $option->getValue();
-            $this->_values[$option->getShort()] = $option->getValue();
+    public function fill()
+    {
+        foreach ($this->options as $option) {
+            $this->values[$option->getLong()]  = $option->getValue($this->optionValues);
+            $this->values[$option->getShort()] = $option->getValue($this->optionValues);
         }
     }
 
+    /**
+     * @param string $optionName
+     * @return mixed
+     */
     public function getValue($optionName)
     {
-        return isset($this->_values[$optionName])
-            ? $this->_values[$optionName]
+        return $this->hasValue($optionName)
+            ? $this->values[$optionName]
             : null;
     }
 
-    public function setOptions($options)
+    public function hasValue($optionName)
     {
-        $this->_options = $options;
-
-        return $this;
-    }
-
-    public function setOptionValues($optionValues)
-    {
-        $this->_optionValues = $optionValues;
-
-        return $this;
+        return isset($this->values[$optionName]);
     }
 }
