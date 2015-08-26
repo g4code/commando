@@ -26,7 +26,7 @@ $cli->option()->short("p")
               ->long("param")
               ->desc('param name description');
               
-echo $cli->getOption('param'); // outputs param option value
+echo $cli->value('param'); // outputs param option value
 ```
 
 ## Development
